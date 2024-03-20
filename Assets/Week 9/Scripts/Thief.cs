@@ -12,16 +12,16 @@ public class Thief : Villager
     //float timer;
     //public float dashTime = 3;
     //bool isDash;
-
+    Coroutine dashing;
     protected override void Attack()
     {
-        //dash towards mouse
-        destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //isDash = true;
-        //timer = dashTime;
-        StartCoroutine(Dash());
+        if(dashing != null)
+        {
+            StopCoroutine(dashing);
+        }
+        dashing = StartCoroutine(Dash());
 
-            speed = 7;
+            
     }
     public override ChestType CanOpen()
     {
