@@ -1,36 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TerrainTools;
 using UnityEngine;
-using TMPro;
-using TMPro.SpriteAssetUtilities;
 
 public class CharacterControl : MonoBehaviour
 {
-    public TextMeshProUGUI tmp;
+    public TMPro.TextMeshProUGUI currentSelection;
+    public static CharacterControl Instance;
     public static Villager SelectedVillager { get; private set; }
     public static void SetSelectedVillager(Villager villager)
     {
-        if (SelectedVillager != null)
+        if(SelectedVillager != null)
         {
             SelectedVillager.Selected(false);
         }
         SelectedVillager = villager;
         SelectedVillager.Selected(true);
-        
+        Instance.currentSelection.text = villager.ToString();
     }
 
-    private void Update()
+    private void Start()
     {
-        if (SelectedVillager != null)
-        {
-            tmp.text = "selected: " + SelectedVillager.canOpen().ToString();
-        }
-        else
-        {
-            tmp.text = "selected: n/a";
-        }
+        Instance = this;
     }
 
-
+    
 }

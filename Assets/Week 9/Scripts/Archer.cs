@@ -6,7 +6,6 @@ public class Archer : Villager
 {
     public GameObject arrowPrefab;
     public Transform spawnPoint;
-   
 
     protected override void Attack()
     {
@@ -15,11 +14,8 @@ public class Archer : Villager
         Instantiate(arrowPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
-    public override ChestType canOpen()
+    public override ChestType CanOpen()
     {
         return ChestType.Archer;
-
     }
-
-
 }
