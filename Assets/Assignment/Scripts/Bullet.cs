@@ -5,15 +5,22 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    float speed =5f;
+   public float speed =5f;
+    Rigidbody rb;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-    Destroy(gameObject, 5f);
+        rb = GetComponent<Rigidbody>();
     }
 
+
+    private void OnColisionEnter2D(Collision2D collision)
+    {
+        print("colide");
+        Destroy(gameObject);
+    }
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         transform.Translate(1 * speed * Time.deltaTime, 0, 0);
        
@@ -21,4 +28,7 @@ public class Bullet : MonoBehaviour
     }
 
 
+
+    
+   
 }

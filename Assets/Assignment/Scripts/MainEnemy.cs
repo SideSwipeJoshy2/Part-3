@@ -7,32 +7,32 @@ using UnityEngine.EventSystems;
 
 public class MainEnemy : MonoBehaviour
 {
-    Rigidbody2D rb;
-
-
-
-    protected float speed = 3;
-    static int ammomax = 10;
+    
+   protected static int ammomax = 10;
      public GameObject projectile;
     public Transform spawn;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
 
-    }
+    protected float firerate = 1;
 
+    
     protected virtual void Update()
     {
         
-        if (Input.GetKey(KeyCode.Space) && ammomax>0)
+        if (Input.GetKeyDown(KeyCode.F) && ammomax>0)
         {
-            Instantiate(projectile, spawn.position, spawn.rotation);
-            ammomax --;
+            StartCoroutine(firerat());
         }
         if (Input.GetKey(KeyCode.R))
         {
             reload();
         }
+    }
+
+    IEnumerator firerat()
+    {
+        Instantiate(projectile, transform.position, transform.rotation);   
+        yield return new WaitForSeconds(1/firerate/60);
+        ammomax--;
     }
 
     public void reload()
