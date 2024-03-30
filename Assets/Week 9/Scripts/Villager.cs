@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class Villager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Villager : MonoBehaviour
     bool clickingOnSelf;
     bool isSelected;
     public GameObject highlight;
+    
 
     protected Vector2 destination;
     Vector2 movement;
