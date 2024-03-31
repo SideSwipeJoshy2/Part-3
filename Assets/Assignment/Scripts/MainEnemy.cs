@@ -2,45 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MainEnemy : MonoBehaviour
 {
-    
-   protected int ammomax = 5;
-     public GameObject projectile;
+
+    protected int ammomax = 5;
+    public GameObject projectile;
     public Transform spawn;
+   protected bool reloading = false;
+   protected bool canShoot = true;
+   protected float reloadTimer = 2f;
 
-    protected float firerate = 1;
 
-    
+   
     protected virtual void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.P) && ammomax>0)
+
+        if (Input.GetKeyDown(KeyCode.P) && ammomax > 0)
         {
-            StartCoroutine(firerat());
+            Instantiate(projectile, transform.position, transform.rotation);
+            ammomax--;
+
         }
-        if (Input.GetKey(KeyCode.R))
+
+        if (Input.GetKey(KeyCode.L) && !reloading)
         {
-            Reload();
+            StartCoroutine(Reload());
         }
+
+
+
     }
 
-    IEnumerator firerat()
+   public virtual IEnumerator Reload()
     {
-        Instantiate(projectile, transform.position, transform.rotation);   
-        yield return new WaitForSeconds(1/firerate/60);
-        ammomax--;
-    }
+        reloading = true;
+        canShoot = false;
 
-    public virtual void Reload()
-    {
+        yield return new WaitForSeconds(reloadTimer);
+        //This causes the code to wait here for 3 seconds before continuing.
         if (ammomax == 0)
         {
-               ammomax = 5; 
+            ammomax = 5;
+
+            canShoot = true;
+            reloading = false;
         }
+    }
+
+    
+
+    
+
     }
 
 
@@ -48,4 +64,4 @@ public class MainEnemy : MonoBehaviour
 
 
 
-}
+

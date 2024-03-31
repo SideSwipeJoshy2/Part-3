@@ -1,49 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rifle : MainEnemy
 {
 
+   static float firerate = 0.25f;
+    static float timer = 0.25f;
 
     // Start is called before the first frame update
     private void Start()
     {
         ammomax = 10;
+        reloadTimer = 3f;
     }
 
 
-    IEnumerator fireratrifle()
+
+    public override IEnumerator Reload()
     {
-        
-            Instantiate(projectile, transform.position, transform.rotation);
-            yield return new WaitForSeconds(1 / firerate / 60);
-            ammomax--;
-      
+
+        reloading = true;
+        canShoot = false;
+
+        yield return new WaitForSeconds(reloadTimer);
+
+        if (ammomax == 0)
+        {
+            ammomax = 10;
+
+            canShoot = true;
+            reloading = false;
+        }
+
     }
 
-    public override void Reload()
-    {
-        base.Reload();
-        ammomax = 10;
-    }
+
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) && ammomax > 0)
+        if (Input.GetKey(KeyCode.R) && ammomax > 0)
         {
-            StartCoroutine(fireratrifle());
-            
+            if (Time.time - firerate > timer)
+            {
+                firerate = Time.time;
+                Instantiate(projectile, transform.position, transform.rotation);
+                ammomax--;
 
+
+            }
         }
+            if (Input.GetKeyDown(KeyCode.D) && !reloading)
+            {
+                StartCoroutine(Reload());
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reload();
-        }
-
+        
     }
-
-
-    }
+}
  

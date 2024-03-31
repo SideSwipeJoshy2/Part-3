@@ -1,43 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sniper : MainEnemy
 {
     // Start is called before the first frame update
+
+    int bolt = 1;
+
     private void Start()
     {
-        ammomax = 3;
+         
+        reloadTimer = 5f;
     }
 
 
-    IEnumerator fireratsniper()
+
+    public override IEnumerator Reload()
     {
 
-        Instantiate(projectile, transform.position, transform.rotation);
-        yield return new WaitForSeconds(1 / firerate / 60);
-        ammomax--;
+        reloading = true;
+        canShoot = false;
+
+        yield return new WaitForSeconds(reloadTimer);
+
+        if (bolt== 0)
+        {
+            bolt = 1;
+
+            canShoot = true;
+            reloading = false;
+        }
 
     }
 
-    public override void Reload()
-    {
-        base.Reload();
-        ammomax = 3;
-    }
+
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) && ammomax > 0)
+        if (Input.GetKeyDown(KeyCode.S) && bolt > 0)
         {
-            StartCoroutine(fireratsniper());
+            Instantiate(projectile, transform.position, transform.rotation);
+            bolt--;
 
 
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.X) && !reloading)
         {
-            Reload();
+            StartCoroutine(Reload());
         }
 
     }
