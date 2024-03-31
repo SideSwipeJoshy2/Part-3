@@ -11,14 +11,11 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Destroy(gameObject, 5f);
     }
 
 
-    private void OnColisionEnter2D(Collision2D collision)
-    {
-        print("colide");
-        Destroy(gameObject);
-    }
+ 
     // Update is called once per frame
     protected virtual void Update()
     {

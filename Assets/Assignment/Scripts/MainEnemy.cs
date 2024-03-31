@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MainEnemy : MonoBehaviour
 {
     
-   protected static int ammomax = 10;
+   protected int ammomax = 5;
      public GameObject projectile;
     public Transform spawn;
 
@@ -18,13 +18,13 @@ public class MainEnemy : MonoBehaviour
     protected virtual void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.F) && ammomax>0)
+        if (Input.GetKeyDown(KeyCode.P) && ammomax>0)
         {
             StartCoroutine(firerat());
         }
         if (Input.GetKey(KeyCode.R))
         {
-            reload();
+            Reload();
         }
     }
 
@@ -35,11 +35,11 @@ public class MainEnemy : MonoBehaviour
         ammomax--;
     }
 
-    public void reload()
+    public virtual void Reload()
     {
         if (ammomax == 0)
         {
-               ammomax = 10; 
+               ammomax = 5; 
         }
     }
 
