@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 7f);
     }
 
 
