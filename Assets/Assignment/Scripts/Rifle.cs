@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Rifle : MainEnemy
+public class Rifle : Pistol
 {
 
    static float firerate = 0.25f;
     static float timer = 0.25f;
-
+  static int rifleammomax = 10;
+    
     // Start is called before the first frame update
     private void Start()
     {
-        ammomax = 10;
         reloadTimer = 3f;
     }
 
@@ -26,9 +26,9 @@ public class Rifle : MainEnemy
 
         yield return new WaitForSeconds(reloadTimer);
 
-        if (ammomax == 0)
+        if (rifleammomax== 0)
         {
-            ammomax = 10;
+            rifleammomax= 10;
 
             canShoot = true;
             reloading = false;
@@ -36,22 +36,24 @@ public class Rifle : MainEnemy
 
     }
 
+    
 
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.R) && ammomax > 0)
+
+       if (Input.GetKey(KeyCode.R) && rifleammomax> 0)
         {
             if (Time.time - firerate > timer)
             {
                 firerate = Time.time;
-                Instantiate(projectile, transform.position, transform.rotation);
-                ammomax--;
+                Instantiate(projectile, spawn.position, spawn.rotation);
+                rifleammomax--;
 
 
             }
         }
-            if (Input.GetKeyDown(KeyCode.D) && !reloading)
+        if (Input.GetKeyDown(KeyCode.D) && !reloading)
             {
                 StartCoroutine(Reload());
             }

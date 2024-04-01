@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Sniper : MainEnemy
+public class Sniper : Pistol
 {
     // Start is called before the first frame update
 
     int bolt = 1;
+   
 
     private void Start()
     {
-         
+       
+       
         reloadTimer = 5f;
     }
 
-
+    
 
     public override IEnumerator Reload()
     {
@@ -32,24 +34,42 @@ public class Sniper : MainEnemy
             canShoot = true;
             reloading = false;
         }
-
+        print("try pressing O!");
     }
 
-
-
-    private void Update()
+    public void snipershoot()
     {
         if (Input.GetKeyDown(KeyCode.S) && bolt > 0)
         {
             Instantiate(projectile, transform.position, transform.rotation);
             bolt--;
+            
+        }
+    }
 
+   
+    public void Overload()
+    {
 
+        bolt = 3;
+        print("3 Shots!");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S) && bolt > 0)
+        {
+        snipershoot();
         }
 
         if (Input.GetKeyDown(KeyCode.X) && !reloading)
         {
             StartCoroutine(Reload());
+        
+        }
+        if(Input.GetKeyDown(KeyCode.O)) { 
+            
+           Overload(); 
         }
 
     }

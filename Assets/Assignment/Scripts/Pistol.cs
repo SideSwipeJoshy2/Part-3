@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MainEnemy : MonoBehaviour
+public class Pistol : MonoBehaviour
 {
 
     protected int ammomax = 5;
@@ -16,15 +16,19 @@ public class MainEnemy : MonoBehaviour
    protected bool canShoot = true;
    protected float reloadTimer = 2f;
 
+    private void Start()
+    {
+        print("You have 5 shots in the pistol, 10 in the rifle, and 1 in the sniper");
+    }
 
-   
+
     protected virtual void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.P) && ammomax > 0)
+        if (Input.GetKeyDown(KeyCode.P) && ammomax> 0)
         {
-            Instantiate(projectile, transform.position, transform.rotation);
-            ammomax--;
+ pistolshoot();
+            
 
         }
 
@@ -33,26 +37,39 @@ public class MainEnemy : MonoBehaviour
             StartCoroutine(Reload());
         }
 
+        
 
 
     }
 
-   public virtual IEnumerator Reload()
+    public virtual void pistolshoot()
+    {
+
+        Instantiate(projectile, spawn.position, spawn.rotation);
+        ammomax--;
+
+    }
+
+    public virtual IEnumerator Reload()
     {
         reloading = true;
         canShoot = false;
 
         yield return new WaitForSeconds(reloadTimer);
-        //This causes the code to wait here for 3 seconds before continuing.
+   
         if (ammomax == 0)
         {
             ammomax = 5;
-
+          
             canShoot = true;
             reloading = false;
+           
         }
+        
+
     }
 
+    
     
 
     
