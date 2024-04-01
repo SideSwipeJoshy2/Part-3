@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 
 public class Pistol : MonoBehaviour
 {
-
-    protected int ammomax = 5;
+    //variables for checking the reload, magazine, and setting the spawnpoint of the bullet
+    protected int ammomax = 5;//magazine variable
     public GameObject projectile;
     public Transform spawn;
    protected bool reloading = false;
@@ -17,14 +17,14 @@ public class Pistol : MonoBehaviour
    protected float reloadTimer = 2f;
 
     private void Start()
-    {
+    {//text to inform the user of magazine sizes
         print("You have 5 shots in the pistol, 10 in the rifle, and 1 in the sniper");
     }
 
 
     protected virtual void Update()
     {
-
+//checks if p is pressed and if the ammo is greater than zero. if it is, fires a round
         if (Input.GetKeyDown(KeyCode.P) && ammomax> 0)
         {
  pistolshoot();
@@ -32,7 +32,7 @@ public class Pistol : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.L) && !reloading)
+        if (Input.GetKey(KeyCode.L) && !reloading)//checks if l is pressed and if the user is currently not reloading. if it is, reloads.
         {
             StartCoroutine(Reload());
         }
@@ -42,7 +42,7 @@ public class Pistol : MonoBehaviour
 
     }
 
-    public virtual void pistolshoot()
+    public virtual void pistolshoot() // this function shoots the pistol and removes a round from the magazine
     {
 
         Instantiate(projectile, spawn.position, spawn.rotation);
@@ -50,7 +50,7 @@ public class Pistol : MonoBehaviour
 
     }
 
-    public virtual IEnumerator Reload()
+    public virtual IEnumerator Reload() //coroutine that reloads the weapon on a timer. if the weapon is reloading it cannot fire until waitforseconds is finished.
     {
         reloading = true;
         canShoot = false;
@@ -69,9 +69,7 @@ public class Pistol : MonoBehaviour
 
     }
 
-    
-    
-
+   
     
 
     }

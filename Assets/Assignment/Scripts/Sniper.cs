@@ -7,19 +7,18 @@ public class Sniper : Pistol
 {
     // Start is called before the first frame update
 
-    int bolt = 1;
-   
+    static int bolt = 1; //magazine for sniper
 
     private void Start()
     {
        
        
-        reloadTimer = 5f;
+        reloadTimer = 5f;//change the reload time
     }
 
     
 
-    public override IEnumerator Reload()
+    public override IEnumerator Reload()//functionally identical to the pistol, just changed for the sniper
     {
 
         reloading = true;
@@ -34,10 +33,10 @@ public class Sniper : Pistol
             canShoot = true;
             reloading = false;
         }
-        print("try pressing O!");
+        print("try pressing Z!");//hint for the user to use the "free shot" 
     }
 
-    public void snipershoot()
+    public void snipershoot()//shoots the sniper
     {
         if (Input.GetKeyDown(KeyCode.S) && bolt > 0)
         {
@@ -48,16 +47,16 @@ public class Sniper : Pistol
     }
 
    
-    public void Overload()
+  
+
+    public override void pistolshoot()//free shot
     {
-
-        bolt = 3;
-        print("3 Shots!");
+        base.pistolshoot();
+        print("Free Shot!");
     }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) && bolt > 0)
+        if (Input.GetKeyDown(KeyCode.S) && bolt > 0)//all pretty similar to the usual
         {
         snipershoot();
         }
@@ -65,11 +64,12 @@ public class Sniper : Pistol
         if (Input.GetKeyDown(KeyCode.X) && !reloading)
         {
             StartCoroutine(Reload());
+            print("Reloading Sniper");
         
         }
-        if(Input.GetKeyDown(KeyCode.O)) { 
-            
-           Overload(); 
+        if(Input.GetKeyDown(KeyCode.Z)) {// free shot
+
+            pistolshoot(); 
         }
 
     }
