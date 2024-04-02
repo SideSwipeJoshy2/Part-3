@@ -35,6 +35,7 @@ public class Pistol : MonoBehaviour
         if (Input.GetKey(KeyCode.L) && !reloading)//checks if l is pressed and if the user is currently not reloading. if it is, reloads.
         {
             StartCoroutine(Reload());
+            print("Pistol reloading");
         }
 
         
@@ -54,7 +55,7 @@ public class Pistol : MonoBehaviour
     {
         reloading = true;
         canShoot = false;
-
+        
         yield return new WaitForSeconds(reloadTimer);
    
         if (ammomax == 0)
@@ -65,8 +66,8 @@ public class Pistol : MonoBehaviour
             reloading = false;
            
         }
-        
 
+        print("Pistol reloaded");
     }
 
    
